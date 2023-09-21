@@ -28,6 +28,9 @@ def taskFlow():
     def load(total_order_value):
         with open("/shared/total.txt", 'a') as f:
             f.write(str(total_order_value))
+        with open(f"/shared/touch.txt", 'r') as f:
+            text = f.read()
+        print(text)
         # print(total_order_value)
     
     # main flow 생성
