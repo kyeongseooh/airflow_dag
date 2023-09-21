@@ -33,8 +33,7 @@ dag = DAG(
     dag_id='pythonOp',
     # test용으로 한번만 돌릴 때 @once를 사용
     schedule_interval='@once',
-    start_date=datetime(2023,8,21,10,17),
-    executor_config=executor_config
+    start_date=datetime(2023,8,21,10,17)
     # schedule=timedelta(minutes=1)
     )
 
@@ -45,12 +44,12 @@ def createFile(location, filename):
         f.write('test')
 
 # op_kwargs는 dict, op_args는 list
-a = PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/airflow/shared','filename': 'touch.txt'}, dag=dag)
+a = PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/airflow/shared','filename': 'touch.txt'}, dag=dag, executor_config=executor_config)
 
 def catFile():
     with open(f"/airflow/shared/touch.txt", 'r') as f:
         text = f.read()
     print(text)
-b = PythonOperator(task_id="t2", python_callable=catFile,  dag=dag)
+b = PythonOperator(task_id="t2", python_callable=catFile,  dag=dag, executor_config=executor_config)
 
 a >> b
