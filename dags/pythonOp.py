@@ -4,16 +4,25 @@ from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
 import pendulum
 
-executor_config = {
+executor_config={
     "KubernetesExecutor": {
-        "volume_mounts": [
+      "volumes": [
+        {
+          "name": "airflow-shared-pv",
+          "persistentVolumeClaim":
             {
-                "name": "airflow-shared-pv",
-                "mountPath": "/mnt/shared"
+              "claimName": "airflow-shared-pvc"
             }
-        ]
+        }
+      ],
+      "volume_mounts": [
+        {
+          "name": "airflow-shared-pv",
+          "mountPath": "/shared"
+        }
+      ]
     }
-}
+  }
 
 dag = DAG(
     dag_id='pythonOp',
@@ -30,4 +39,4 @@ def createFile(location, filename):
         f.write('')
 
 # op_kwargs는 dict, op_args는 list
-PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/mnt/shared','filename': 'touch.txt'}, dag=dag, executor_config=executor_config)
+PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/shared','filename': 'touch.txt'}, dag=dag, executor_config=executor_config)
