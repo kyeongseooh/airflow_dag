@@ -7,7 +7,7 @@ from kubernetes.client import models as k8s
 K8S_VOLUMES=[
     k8s.V1Volume(
         name='airflow-shared-pv',
-        persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='airflow-shared-pvc'),
+        persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='airflow-shared-claim'),
     )
 ]
 
