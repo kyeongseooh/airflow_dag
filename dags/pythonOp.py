@@ -6,14 +6,6 @@ import pendulum
 
 executor_config = {
     "KubernetesExecutor": {
-        "volumes": [
-            {
-                "name": "airflow-shared-pv",
-                "persistentVolumeClaim": {
-                    "claimName": "airflow-shared-pvc"
-                }
-            }
-        ],
         "volume_mounts": [
             {
                 "name": "airflow-shared-pv",
