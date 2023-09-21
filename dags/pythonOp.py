@@ -26,6 +26,6 @@ def catFile():
     with open(f"/mnt/shared/touch.txt", 'r') as f:
         text = f.read()
     print(text)
-b = PythonOperator(task_id="t1", python_callable=catFile,  dag=dag)
+b = PythonOperator(task_id="t2", python_callable=catFile,  dag=dag)
 
 a >> b
