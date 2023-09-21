@@ -29,18 +29,10 @@ def taskFlow():
             f.write(str(total_order_value))
         # print(total_order_value)
     
-    @task()
-    def get_data():
-        with open("/opt/shared/total.txt", 'r') as f:
-            data = f.read()
-        print(data)
-        # print(total_order_value)
-    
     # main flow 생성
     order_data = generateData()
     order_summary = transform(order_data)
     load(order_summary["total_order_value"])
-    get_data()
 
 # dag start
 taskFlow()
