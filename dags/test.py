@@ -25,13 +25,13 @@ def taskFlow():
 
     @task()
     def load(total_order_value):
-        with open("total.txt", 'a') as f:
+        with open("/opt/shared/total.txt", 'a') as f:
             f.write(str(total_order_value))
         # print(total_order_value)
     
     @task()
     def get_data():
-        with open("total.txt", 'r') as f:
+        with open("/opt/shared/total.txt", 'r') as f:
             data = f.read()
         print(data)
         # print(total_order_value)
