@@ -17,7 +17,15 @@ dag = DAG(
 # python Operator
 def createFile(location, filename):
     with open(f"{location}/{filename}", 'a') as f:
-        f.write('')
+        f.write('test')
 
 # op_kwargs는 dict, op_args는 list
-PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/mnt/shared','filename': 'touch.txt'}, dag=dag)
+a = PythonOperator(task_id="t1", python_callable=createFile, op_kwargs={'location': '/mnt/shared','filename': 'touch.txt'}, dag=dag)
+
+def catFile():
+    with open(f"/mnt/shared/touch.txt", 'r') as f:
+        text = f.read()
+    print(text)
+b = PythonOperator(task_id="t1", python_callable=catFile,  dag=dag)
+
+a >> b
