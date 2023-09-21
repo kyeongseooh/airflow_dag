@@ -3,7 +3,26 @@ from datetime import datetime
 import pendulum
 import json
 
-@dag(dag_id='taskflow', start_date=datetime(2023,8,21,10,17), schedule_interval='@once')
+executor_config = {
+    "KubernetesExecutor": {
+        "volumes": [
+            {
+                "name": "airflow-shared-pv",
+                "persistentVolumeClaim": {
+                    "claimName": "airflow-shared-pvc"
+                }
+            }
+        ],
+        "volume_mounts": [
+            {
+                "name": "airflow-shared-pv",
+                "mountPath": "/mnt/shared"
+            }
+        ]
+    }
+}
+
+@dag(dag_id='taskflow', start_date=datetime(2023,8,21,10,17), schedule_interval='@once', executor_config=executor_config)
 def taskFlow():
     @task()
     def generateData():
