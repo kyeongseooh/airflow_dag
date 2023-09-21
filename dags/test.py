@@ -25,7 +25,7 @@ def taskFlow():
 
     @task()
     def load(total_order_value):
-        with open("/airflow/total.txt", 'a') as f:
+        with open("total.txt", 'a') as f:
             f.write(str(total_order_value))
         # print(total_order_value)
 
